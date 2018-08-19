@@ -10,7 +10,9 @@
 #include <termios.h>/* POSIX Terminal Control Definitions*/
 #include <errno.h>  /* ERROR Number Definitions          */
 
-
+#define MIRRORADDR "mirroraddr"
+#define TDCSTARTADDR "tdcstartaddr"
+#define TDCCOUNTADDR "tdccountaddr"
 
 void reverse(char *str, int len);
 int intToStr(int x, char str[], int d);
@@ -31,14 +33,19 @@ struct lidarParams{
   float zMacroStep;
   float zPeakCheckStep;
   int verbose;
-  int fileName_fd;
-  int fileName_fd2;
   int tdcIntegrationTime;
-  int mirror_fd;
-  int delay_fd;
-  int tdcStart_fd;
-  int tdcCount_fd;
+};
+struct lidar_fd{
+  int file1;
+  int file2;
+  int mirror;
+  int delay;
+  int tdcStart;
+  int tdcCount;
 };
 
+int normalLidar(lidarParams lp, lidar_fd lfd);
+int adaptiveLidar(lidarParams lp, lidar_fd lfd);
+int closeAll_fd(lidar_fd lfd); 
 
                   /*  */

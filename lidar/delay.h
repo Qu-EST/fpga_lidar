@@ -14,4 +14,4 @@ int changeDelay(int fd, float dly);
 float  getDelay(int fd);
 int openDelay();
 int closeDelay(int fd);
-int ibwrite(int, char*, unsigned int);
+
