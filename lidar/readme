@@ -1,0 +1,28 @@
+Program to do the FPGA LIDAR
+
+
+Steps to build the program 
+make lidar - lidar
+
+
+make clean - run this if any changes done to the mirror.c or delay.c before the make lidar
+
+Input options to the program
+
+      l - run normal lidar (no adaptive)
+      x - X min value
+      X - X max value
+      s - Step value for the X
+      y - Y min value
+      Y - Y max value
+      u - Step value for the Y
+      z - Delay min value
+      Z - Delay max value
+      m - Micro step value for the delay
+      M - Macro step value for the delay
+      v - Verbose
+      f - Filename
+      F - Filename2
+      t - TDC integration time
+      p - Peak check 
+
