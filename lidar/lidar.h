@@ -1,5 +1,6 @@
 #include "delay.h"
 #include "mirror.h"
+#include "ib.h"
 #include <string.h>
 #include <math.h>
 #include <stdlib.h>
@@ -16,8 +17,5 @@ int intToStr(int x, char str[], int d);
 void ftoa(float n, char *res, int afterpoint);
 
 
-/* delay functions */
-int changeDelay(int fd, float dly);
-float  getDelay(int fd);
 
                   /*  */
