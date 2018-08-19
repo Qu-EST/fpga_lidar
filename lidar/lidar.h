@@ -1,15 +1,23 @@
+#include "delay.h"
+#include "mirror.h"
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <fcntl.h>  /* File Control Definitions          */
+#include <termios.h>/* POSIX Terminal Control Definitions*/
+#include <errno.h>  /* ERROR Number Definitions          */
 
-/* mirror functions */
-int changePosition(int fd, float x, float y);
-float* getPosition(int fd);
+
+
+void reverse(char *str, int len);
+int intToStr(int x, char str[], int d);
+void ftoa(float n, char *res, int afterpoint);
+
 
 /* delay functions */
 int changeDelay(int fd, float dly);
 float  getDelay(int fd);
 
-
-
-/* create a structure for the mirror parameters */
-struct mirrorParams{
-};
-/*  */
+                  /*  */
