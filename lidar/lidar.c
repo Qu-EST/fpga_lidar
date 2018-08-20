@@ -4,6 +4,8 @@ int main(int argc, char* argv[]){
   int lidar = 0;
   lidarParams lp;
   lidar_fd lfd;
+
+  /* set the default values  */
   lp->xMin = -0.5;
   lp->xMax = 0.5;
   lp->xStep = 0.1;
@@ -185,10 +187,10 @@ int closeAll_fd(lidar_fd lfd){
 
   if(lfd->file2)
     close(lfd->file2);
-
+  /* get the mirror to zero before closing */
   if(lfd->mirror)
     closeMirror(lfd->mirror);
-
+  /* get the delay to zero before closing */
   if(lfd->delay)
     closeDelay(lfd->delay);
 
