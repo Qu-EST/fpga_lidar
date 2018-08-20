@@ -1,3 +1,6 @@
 #emacs temp files
 *#*
 *~*
+
+#object files
+*.o
