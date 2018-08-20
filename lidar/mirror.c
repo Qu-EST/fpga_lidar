@@ -129,6 +129,8 @@ float* getPosition(int fd);
 
 int closeMirror(int fd){
 
+  changePosition(fd, (float)0, (float) 0);
+
   write(fd, EXITMIRROR, sizeof(EXITMIRROR));
   close(fd);
   
