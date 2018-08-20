@@ -29,10 +29,6 @@ int main(int argc, char* argv[]){
 
   int opt;
   
-  /* lp->fileName_fd = NULL; */
-  /* lp->fileName_fd2 = NULL; */
-  /* lp->mirror_fd = NULL; */
-  /* lp->delay_fd = NU */
   while ((opt = getopt(argc, argv, "lx:X:s:y:Y:u:z:Z:m:M:vf:F:t:p:")) != -1){
     switch(opt){
     case 'l':
@@ -123,11 +119,61 @@ int main(int argc, char* argv[]){
 /* close the connections */
 
 int normalLidar(struct lidarParams lp, lidar_fd lfd){
+  int count;
+  for (float xItr = lp.xMin; xItr <= lp.xMax; xItr += lp.xStep){
+    for(float yItr = lp.yMin; yItr <= lp.yMax; yItr += lp.yStep){
+      changePosition(lfd.mirror, xItr, yItr);
+      for(float zItr = lp.zMin; zItr <= lp.zMax; zItr += lp.zMicroStep){
+	changeDelay(lfd.delay, zItr);
+	write(lfd.tdcStart, "1", 1);
+	read(lfd.tdcCount, &count, 4);
+	fprintf(lfd.file1, "%f, %f, %f, %d\n", xItr, yItr, zItr, count);
+      }
+    }
+  }
 
   return 0;
 }
 
+float getAdaptive(float x, float y, float zMin, float zMax){
+  float adaptive =0;
+ 
+  
+  return adaptive;
+}
+
+void dlyCntMxChk(float x, float y, float z, lidarParams lp, lidar_fds, lfd, float *maxdly, int *maxcnt){
+  int count;
+  changeDelay(lfd, z);
+   write(lfd.tdcStart, "1", 1);
+  read(lfd.tdcCount, &count, 4);
+  if (*maxcnt < count) {
+    *maxcnt = count;
+    *maxdly = dly;
+  }
+}
+
+float getPeak(float x, float y, lidarParams lp, lidar_fds lfd){
+  //float peak =0;
+  delayNCount maxCount;
+  maxCount.count = 0;
+  maxCount.delay = 0;
+
+  float zItr;
+	// do the macrostep scan to locate where the peak might occur
+  for (zItr = lp.zMin; zItr <= lp.zMax; zItr+=zMacroStep){
+    
+    dlyCntMxChk(x, y, zItr, lp, lfd, &maxCount.delay, &maxCount.count);
+  }
+	//check if this the real macro peak or if it's the side small peak
+    dlyCntMxChk(x, y, maxCount.delay + lp.zPeakCheckStep, lp, lfd, &maxCount.delay, &maxCount.count);
+  
+  return maxCount.delay;
+
+}
 int adaptiveLidar(struct lidarParams lp, lidar_fd lfd){
+  int count;
+  float adaptive =0;
 
   return 0;
 }
@@ -156,4 +202,4 @@ int closeAll_fd(lidar_fd lfd){
 }
 
 
-/* lidar code */
+

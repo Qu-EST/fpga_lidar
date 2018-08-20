@@ -19,6 +19,11 @@ int intToStr(int x, char str[], int d);
 void ftoa(float n, char *res, int afterpoint);
 float atof(const char*);
 
+struct delayNCount{
+  int count;
+  float delay;
+}
+
 struct lidarParams{
 
   float xMin;
