@@ -1,6 +1,6 @@
 #include "delay.h"
 #include "mirror.h"
-#include "ib.h"
+#include "include/gpib/ib.h"
 #include <string.h>
 #include <math.h>
 #include <stdlib.h>
@@ -17,12 +17,12 @@
 void reverse(char *str, int len);
 int intToStr(int x, char str[], int d);
 void ftoa(float n, char *res, int afterpoint);
-float atof(const char*);
+/* float atof(const char*); */
 
 struct delayNCount{
   int count;
   float delay;
-}
+};
 
 struct lidarParams{
 
@@ -49,8 +49,8 @@ struct lidar_fd{
   int tdcCount;
 };
 
-int normalLidar(lidarParams lp, lidar_fd lfd);
-int adaptiveLidar(lidarParams lp, lidar_fd lfd);
-int closeAll_fd(lidar_fd lfd); 
+int normalLidar(struct lidarParams lp,struct lidar_fd lfd);
+int adaptiveLidar(struct lidarParams lp, struct lidar_fd lfd);
+int closeAll_fd(struct lidar_fd lfd); 
 
                   /*  */
