@@ -9,11 +9,11 @@ int main(void){
     exit(-1);
   }
 
-  if(changeParams(mirror)<0){
-    printf("Unable to change the parameters of the mirror\n");
-    exit(-1);
+  /* if(changeParams(mirror)<0){ */
+  /*   printf("Unable to change the parameters of the mirror\n"); */
+  /*   exit(-1); */
     
-  }
+  /* } */
 
 
   for(float x = 0; x < 1; x++){

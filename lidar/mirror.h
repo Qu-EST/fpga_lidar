@@ -15,6 +15,13 @@
 #define VB_VAL 80
 #define BW_VAL 140
 
+#define ERROPEN -1
+#define ERRPARAM -2
+#define ERRPOS -3
+#define ERRCOMM -4
+#define ERREN -5
+
+#define DECIMALPOS 3
 
 
 

@@ -53,19 +53,26 @@ int openMirror(char* name){
   
   /* DO  a read and check if the MTI+OK has been received */
   if(checkStatus(fd))
-    return -1;
+    return ERROPEN;
+
+  if(changeParamValue(fd, SETVD, VD_VAL))
+    return ERRPARAM;
+  if(changeParamValue(fd, SETVB, VB_VAL))
+      return ERRPARAM;
+  if(changeParamValue(fd, SETBW, BW_VAL))
+    return ERRPARAM;
   return fd;
 }
 
 
 
-int changeParams(int fd){
-  changeParamValue(fd, SETVD, VD_VAL);
-  changeParamValue(fd, SETVB, VB_VAL);
-  changeParamValue(fd, SETBW, BW_VAL);
+/* int changeParams(int fd){ */
+/*   changeParamValue(fd, SETVD, VD_VAL); */
+/*   changeParamValue(fd, SETVB, VB_VAL); */
+/*   changeParamValue(fd, SETBW, BW_VAL); */
   
-  return 0;
-}
+/*   return 0; */
+/* } */
 
 int changeParamValue(int fd, char* param, int data){
 
@@ -78,7 +85,7 @@ int changeParamValue(int fd, char* param, int data){
   if(checkStatus(fd)){
 
     fprintf(stderr,"Error in changing the %s of the mirror\n", param);
-    return -1;
+    return ERRPARAM;
   }
   return 0;
 }
@@ -88,7 +95,7 @@ int checkStatus(int fd){
   read(fd, status, sizeof("MTI+OK\n"));
   if(strcmp(status, "MTI+OK\n"))
     
-     return -1;
+     return ERRCOMM;
   return 0;
 }
 
@@ -98,7 +105,7 @@ int enableMirror(int fd){
   write(fd, ENABLEMIRROR, sizeof(ENABLEMIRROR));
   /* do a read for MTI+OK AND check if everything is okay */
   if(checkStatus(fd))
-    return -1;
+    return ERREN;
   return 0;
 }
   
@@ -107,16 +114,16 @@ int changePosition(int fd, float x, float y){
   char value[10];
   
   strcat(command, CHANGEPOS);
-  ftoa(x, value, 3);
+  ftoa(x, value, DECIMALPOS);
   strcat(command, value);
   strcat(command, " ");
-  ftoa(y, value, 3);
+  ftoa(y, value, DECIMALPOS);
   strcat(command, value);
   strcat(command, "\n");
   write(fd, command, strlen(command));
   if(checkStatus(fd)){
     printf("Error whcn changing the position in the mirror X: %f, Y: %f \n", x, y);
-    exit(-1);
+    return ERRPOS;
   }
 
   return 0;
