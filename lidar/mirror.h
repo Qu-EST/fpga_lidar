@@ -11,6 +11,10 @@
 #define EXITMIRROR "MTI+EX"
 
 
+#define VD_VAL 125
+#define VB_VAL 80
+#define BW_VAL 140
+
 
 
 
@@ -24,7 +28,7 @@ struct mirrorParams{
 
 /* mirror functions */
 int openMirror(char*);
-int changeParams(int fd, struct mirrorParams params);
+int changeParams(int fd);
 int changeParamValue(int fd, char* param, int data);
 int enableMirror(int fd);
 int changePosition(int fd, float x, float y);

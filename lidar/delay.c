@@ -34,6 +34,8 @@ int openDelay(){
 int closeDelay(int fd){
   ibonl(fd, 0);
   close(fd);
+
+  return 0;
 }
 
 

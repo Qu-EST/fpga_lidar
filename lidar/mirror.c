@@ -7,9 +7,9 @@ int openMirror(char* name){
   struct termios SerialPortSettings;
   size_t bytes_written;
   fd = open(name ,O_RDWR | O_NOCTTY);
-  if(fd == -1){
+  if(fd <0){
      printf("\n  Error! in Opening ttyUSB0\n");
-     exit(-1);
+     return(fd);
   }
   printf("\n  ttyUSB0 Opened Successfully\n");
 
@@ -59,10 +59,10 @@ int openMirror(char* name){
 
 
 
-int changeParams(int fd, struct mirrorParams params){
-  changeParamValue(fd, SETVD, params.vD);
-  changeParamValue(fd, SETVB, params.vB);
-  changeParamValue(fd, SETBW, params.BW);
+int changeParams(int fd){
+  changeParamValue(fd, SETVD, VD_VAL);
+  changeParamValue(fd, SETVB, VB_VAL);
+  changeParamValue(fd, SETBW, BW_VAL);
   
   return 0;
 }
@@ -78,7 +78,7 @@ int changeParamValue(int fd, char* param, int data){
   if(checkStatus(fd)){
 
     fprintf(stderr,"Error in changing the %s of the mirror\n", param);
-    exit(-1);
+    return -1;
   }
   return 0;
 }
