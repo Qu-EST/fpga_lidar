@@ -10,7 +10,7 @@
 #include <termios.h>/* POSIX Terminal Control Definitions*/
 #include <errno.h>  /* ERROR Number Definitions          */
 
-#define MIRRORADDR "mirroraddr"
+#define MIRRORADDR "/dev/ttyUSB0"
 #define TDCSTARTADDR "tdcstartaddr"
 #define TDCCOUNTADDR "tdccountaddr"
 

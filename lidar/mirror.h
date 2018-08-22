@@ -2,13 +2,13 @@
 
 /* mirror commands */
 
-#define TERMMODE "$MTI$"
+#define TERMMODE "$MTI$\n"
 #define SETVD "MTI+VD "
 #define SETVB "MTI+VB "
 #define SETBW "MTI+BW "
-#define ENABLEMIRROR "MTI+EN"
+#define ENABLEMIRROR "MTI+EN\n"
 #define CHANGEPOS "MTI+GT "
-#define EXITMIRROR "MTI+EX"
+#define EXITMIRROR "MTI+EX\n"
 
 
 #define VD_VAL 125

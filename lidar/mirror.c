@@ -47,13 +47,17 @@ int openMirror(char* name){
 
   /* Set the mirror for the terminal mode */
   bytes_written = write(fd, TERMMODE, strlen(TERMMODE));
-  if(bytes_written<sizeof(TERMMODE)){
-    printf("error when enbleing the mirror terminal mode");
+
+  //
+
+  if(bytes_written!=strlen(TERMMODE)){
+    printf("error when enabling the mirror terminal mode");
   }
   
-  /* DO  a read and check if the MTI+OK has been received */
-  if(checkStatus(fd))
-    return ERROPEN;
+  /* Read and check if the term mode is enables */
+  char termCheck[55];
+  read(fd, &termCheck,51);
+  printf("%s\n", termCheck);
 
   if(changeParamValue(fd, SETVD, VD_VAL))
     return ERRPARAM;
@@ -76,10 +80,11 @@ int openMirror(char* name){
 
 int changeParamValue(int fd, char* param, int data){
 
-  char command[15];
-  char value[4];
+  char command[15] = "";
+  char value[4] = "" ;
   strcat(command, param);
   intToStr(data, value, 3);
+  strcat(command, value);
   strcat(command, "\n");
   write(fd, command, strlen(command));
   if(checkStatus(fd)){
@@ -92,7 +97,7 @@ int changeParamValue(int fd, char* param, int data){
 
 int checkStatus(int fd){
   char status[10];
-  read(fd, status, sizeof("MTI+OK\n"));
+  read(fd, &status, strlen("MTI+OK\n"));
   if(strcmp(status, "MTI+OK\n"))
     
      return ERRCOMM;
