@@ -5,3 +5,10 @@
 #object files
 *.o
 *.gch
+
+
+#exe files
+delay
+mirror
+testMirror
+testDelay
