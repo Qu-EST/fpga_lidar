@@ -41,4 +41,4 @@ int enableMirror(int fd);
 int changePosition(int fd, float x, float y);
 float* getPosition(int fd);
 int closeMirror(int fd);
-int checkStatus(int);
+int checkStatus(FILE*);

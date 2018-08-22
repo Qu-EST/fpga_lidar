@@ -55,9 +55,13 @@ int openMirror(char* name){
   }
   
   /* Read and check if the term mode is enables */
-  char termCheck[55];
-  read(fd, &termCheck,51);
+  char *termCheck;
+  size_t len;
+  FILE* m=fdopen(fd, "R");
+  if(getline(&termCheck, &len, m)==-1)
+    printf("unable to get stuf from the mirror\n");
   printf("%s\n", termCheck);
+  free(termCheck);
 
   if(changeParamValue(fd, SETVD, VD_VAL))
     return ERRPARAM;
@@ -95,9 +99,11 @@ int changeParamValue(int fd, char* param, int data){
   return 0;
 }
 
-int checkStatus(int fd){
-  char status[10];
-  read(fd, &status, strlen("MTI+OK\n"));
+int checkStatus(FILE* m){
+  char* status;
+  size_t len;
+  
+  getline(&status, &len, m);
   if(strcmp(status, "MTI+OK\n"))
     
      return ERRCOMM;
