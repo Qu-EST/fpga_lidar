@@ -3,8 +3,8 @@
 
 
 int changeDelay(int fd, float dly){
-  char command[15];
-  char value[10];
+  char command[15] = "";
+  char value[10] = "";
   int write_len;
   strcat(command, "DLY ");
   ftoa(dly, value, 3);

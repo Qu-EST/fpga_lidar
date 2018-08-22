@@ -1,10 +1,28 @@
-lidar cc lidar.c mirror.o delay.o lidar.h -o lidar
-#alidar 
+CDEBUG = -c -g
+DEBUG = -g
 
-testMirror cc testMirror.c mirror.o lidar.h -o testMirror
+lidar : cc lidar.c mirror.o delay.o ftoa.o lidar.h -o lidar
 
 
-delay.o cc -c delay.c lidar.h delay.h -o delay.o
-mirror.o cc -c mirror.c lidar.h mirror.h -o mirror.o
+#test 
 
-clean rm *.o
+testMirror : testMirror.c mirror.o lidar.h ftoa.o
+	cc $(DEBUG) testMirror.c mirror.o lidar.h ftoa.o -lm -o testMirror
+
+testDelay: testDelay.c delay.h ftoa.o delay.o lidar.h
+	cc $(DEBUG) testDelay.c delay.h ftoa.o delay.o lidar.h -lgpib -lm -o testDelay
+
+
+
+delay.o: delay.c lidar.h delay.h ftoa.o
+	cc $(CDEBUG) delay.c lidar.h delay.h -lgpib
+
+mirror.o: mirror.c lidar.h mirror.h
+	cc $(CDEBUG)  mirror.c lidar.h mirror.h 
+
+
+ftoa.o:	ftoa.c lidar.h
+	cc $(CDEBUG) ftoa.c lidar.h -lm
+
+clean:	*.o
+	rm *.o  

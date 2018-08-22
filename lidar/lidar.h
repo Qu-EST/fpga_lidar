@@ -1,6 +1,6 @@
 #include "delay.h"
 #include "mirror.h"
-#include "include/gpib/ib.h"
+#include <gpib/ib.h>
 #include <string.h>
 #include <math.h>
 #include <stdlib.h>
