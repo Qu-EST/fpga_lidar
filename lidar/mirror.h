@@ -23,7 +23,10 @@
 
 #define DECIMALPOS 3
 
-
+#define MTIOK 0
+#define MTICON 1
+#define MTIEX 2
+#define MTIERR -6
 
 /* create a structure for the mirror parameters */
 struct mirrorParams{
@@ -41,4 +44,4 @@ int enableMirror(int fd);
 int changePosition(int fd, float x, float y);
 float* getPosition(int fd);
 int closeMirror(int fd);
-int checkStatus(FILE*);
+int checkStatus(int);

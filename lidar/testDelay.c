@@ -12,6 +12,7 @@ int main(void){
   for(float i =0; i< 10; i+=0.1){
 
     printf("Changing the delay to %f\n", i);
+    
     changeDelay(delay, i);
   }
 

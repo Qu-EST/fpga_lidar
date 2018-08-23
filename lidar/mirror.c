@@ -54,15 +54,12 @@ int openMirror(char* name){
     printf("error when enabling the mirror terminal mode");
   }
   
-  /* Read and check if the term mode is enables */
-  char *termCheck;
-  size_t len;
-  FILE* m=fdopen(fd, "R");
-  if(getline(&termCheck, &len, m)==-1)
-    printf("unable to get stuf from the mirror\n");
-  printf("%s\n", termCheck);
-  free(termCheck);
-
+  /* Read and check if the term mode is enabled */
+  if(checkStatus(fd)==MTICON)
+    printf("Terminal mode enabled for mirror\n");
+  else
+    return ERRCOMM;
+  
   if(changeParamValue(fd, SETVD, VD_VAL))
     return ERRPARAM;
   if(changeParamValue(fd, SETVB, VB_VAL))
@@ -74,13 +71,6 @@ int openMirror(char* name){
 
 
 
-/* int changeParams(int fd){ */
-/*   changeParamValue(fd, SETVD, VD_VAL); */
-/*   changeParamValue(fd, SETVB, VB_VAL); */
-/*   changeParamValue(fd, SETBW, BW_VAL); */
-  
-/*   return 0; */
-/* } */
 
 int changeParamValue(int fd, char* param, int data){
 
@@ -99,15 +89,22 @@ int changeParamValue(int fd, char* param, int data){
   return 0;
 }
 
-int checkStatus(FILE* m){
-  char* status;
-  size_t len;
-  
-  getline(&status, &len, m);
-  if(strcmp(status, "MTI+OK\n"))
-    
-     return ERRCOMM;
-  return 0;
+int checkStatus(int fd){
+  char* status[70] = "";
+  size_t len = 0;
+  char* temp[2]="";
+  while(temp[1]!='\n'){
+    read(fd, temp, 1);
+    strncat(status, temp, 1);
+  }
+  if((strcmp(status, "MTI-OK"))==0)
+    return MTIOK;
+  else if(strncmp(status, "MTI-ERR", 7)==0)
+    return MTIERR;
+  else if(strncmp(status, "MTI-Device E", 9)==0)
+    return MTIEX;
+  else
+    return MTICON;
 }
 
 
