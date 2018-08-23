@@ -24,5 +24,5 @@ mirror.o: mirror.c lidar.h mirror.h
 ftoa.o:	ftoa.c lidar.h
 	cc $(CDEBUG) ftoa.c lidar.h -lm
 
-clean:	*.o
+clean:	
 	rm *.o  

@@ -55,7 +55,8 @@ int openMirror(char* name){
   }
   
   /* Read and check if the term mode is enabled */
-  if(checkStatus(fd)==MTICON)
+  int stat = checkStatus(fd);
+  if( stat == MTICON )
     printf("Terminal mode enabled for mirror\n");
   else
     return ERRCOMM;
@@ -90,16 +91,17 @@ int changeParamValue(int fd, char* param, int data){
 }
 
 int checkStatus(int fd){
-  char* status[70] = "";
+  char status[70] = "";
   size_t len = 0;
-  char* temp[2]="";
-  while(temp[1]!='\n'){
+  char temp[2]="";
+  while(temp[0]!='\n'){
+    len++;
     read(fd, temp, 1);
     strncat(status, temp, 1);
   }
-  if((strcmp(status, "MTI-OK"))==0)
+  if((strcmp(status, "MTI-OK\n"))==0)
     return MTIOK;
-  else if(strncmp(status, "MTI-ERR", 7)==0)
+  else if((strncmp(status, "MTI-ERR", 7))==0)
     return MTIERR;
   else if(strncmp(status, "MTI-Device E", 9)==0)
     return MTIEX;
