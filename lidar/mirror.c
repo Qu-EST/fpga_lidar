@@ -101,9 +101,9 @@ int checkStatus(int fd){
   }
   if((strcmp(status, "MTI-OK\n"))==0)
     return MTIOK;
-  else if((strncmp(status, "MTI-ERR", 7))==0)
+  else if((strncmp(status, "MTI-ER", strlen("MTI-ER")))==0)
     return MTIERR;
-  else if(strncmp(status, "MTI-Device E", 9)==0)
+	  else if(strncmp(status, "MTI-Device E", strlen("MTI-Device E"))==0)
     return MTIEX;
   else
     return MTICON;
